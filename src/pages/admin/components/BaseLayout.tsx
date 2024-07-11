@@ -1,13 +1,13 @@
 import { AppShell, AppShellNavbar, NavLink } from '@mantine/core';
-import NavBar from './nav-bar';
-import { NavLinks } from '../constants/NavLink';
-import { useNavigate, Qutlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Icon } from '../../../components/common/icon';
+import { NavLinks } from '../constants/NavLink';
+import NavBar from './nav-bar';
 
 const BaseLayout = () => {
   const navigate = useNavigate();
   const toggleSidebar = () => {
-
+    navigate('/')
   }
   return (
     <AppShell
@@ -26,9 +26,9 @@ const BaseLayout = () => {
           />
         ))}
       </AppShellNavbar>
-      {/* <AppShell.Main>
-        <Qutlet />
-      </AppShell.Main> */}
+      <AppShell.Main>
+        <Outlet />
+      </AppShell.Main>
     </AppShell>
   )
 }
