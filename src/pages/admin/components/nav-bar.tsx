@@ -6,7 +6,7 @@ interface Prop {
 }
 const NavBar = ({ toggleSidebar }: Prop) => {
   return (
-    <AppShell className="flex items-center justify-between bg-[#5c9cb7] p-2 shadow-lg py-8">
+    <AppShell className="flex items-center justify-between bg-[#5c9cb7] p-2 shadow-lg py-8 sticky top-0 z-10">
       <div className="flex items-center ml-2">
         <CiMenuFries
           onClick={() => toggleSidebar()}

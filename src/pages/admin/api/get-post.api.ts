@@ -19,6 +19,6 @@ export const getAllPosts = async (query: postQuery) => {
 
 export const useGetAllPosts = (query: postQuery) =>
   useQuery({
-    queryKey: ['post', query],
+    queryKey: ['posts', query],
     queryFn: () => getAllPosts(query)
   })
