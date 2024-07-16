@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
-import { useGetOnePost } from '../api/get-one-post.api';
-import { ActionIcon, Button, CloseButton, FileButton, Image, LoadingOverlay, TextInput, Textarea } from '@mantine/core';
-import { Controller, useForm } from 'react-hook-form';
-import { updatePostSchema, UpdatePostSchemaTDO } from '../pages/schema';
 import { zodResolver } from '@hookform/resolvers/zod/src/zod.js';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { ActionIcon, Button, CloseButton, FileButton, Image, LoadingOverlay, TextInput, Textarea } from '@mantine/core';
+import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 import app from '../../../lib/firebase';
-import { useUpdatePost } from '../api/update-post.api';
 import { queryClient } from '../../../lib/react-query';
+import { useGetOnePost } from '../api/get-one-post.api';
+import { useUpdatePost } from '../api/update-post.api';
+import { UpdatePostSchemaTDO, updatePostSchema } from '../pages/schema';
 import DeletePost from './delete-post';
 
 export const CardDetail = () => {
@@ -58,9 +58,10 @@ export const CardDetail = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     setLoading(true);
+
     const newImageUrl = newFileFilter.map(async item => {
       const storage = getStorage(app)
-      const storageRef = ref(storage, 'image/' + item.name)
+      const storageRef = ref(storage, `image/` + item.name)
       await uploadBytes(storageRef, item)
       const downloadUrl = await getDownloadURL(storageRef)
       return downloadUrl
@@ -85,6 +86,12 @@ export const CardDetail = () => {
 
   })
 
+  function getPathFromUrl(downloadUrl) {
+    const indexOfPath = downloadUrl.indexOf('/o/') + 3;
+    const indexOfAlt = downloadUrl.indexOf('?alt=media');
+    return decodeURIComponent(downloadUrl.substring(indexOfPath, indexOfAlt));
+  }
+
   return (
     <div>
       {
@@ -94,6 +101,15 @@ export const CardDetail = () => {
               {oldFileFilter?.map((item, index) => (
                 <div key={index} className='m-4 w-[40%]'>
                   <CloseButton onClick={() => {
+                    const storage = getStorage(app);
+                    const filePath = getPathFromUrl(item);
+                    const fileRef = ref(storage, filePath);
+
+                    const deserRef = ref(storage, fileRef as unknown as string)
+
+                    deleteObject(deserRef).then(() => console.log("success")
+                    ).catch((err) => console.log(err)
+                    )
                     setRemoveFile(item)
                     setOldImage(oldFileFilter as string[])
                   }}

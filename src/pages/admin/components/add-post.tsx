@@ -31,7 +31,6 @@ export const AddPost = ({ open, setOpen }: Props) => {
       await uploadBytes(storageRef, item)
       const downloadUrl = await getDownloadURL(storageRef)
       return downloadUrl;
-
     }).filter(item => item);
 
     const ImageUrl = await Promise.all(uploadPromises);

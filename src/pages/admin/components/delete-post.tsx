@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Modal, Text, Title } from '@mantine/core'
+import { ActionIcon, Button, Modal, Title } from '@mantine/core'
 import { useDeletePost } from '../api/delete-post.api'
 import { queryClient } from '../../../lib/react-query'
 import { useNavigate } from 'react-router-dom'
@@ -30,10 +30,10 @@ const DeletePost = ({ open, setOpen, id }: Props) => {
     })
   }
   return (
-    <Modal opened={open} onClose={setOpen} centered>
+    <Modal opened={open} onClose={setOpen} centered withCloseButton={false}>
       <Title className='text-center' order={3}>Are you sure to delete this post?</Title>
       <div className='flex justify-end gap-2 mt-5'>
-        <Button variant='outline'>CANCLE</Button>
+        <Button variant='outline' onClick={setOpen}>CANCLE</Button>
         {isLoading ?
           <ActionIcon className='w-24 h-9 bg-red-500' loading loaderProps={{ type: 'dots' }} /> :
           <Button onClick={deleteFn} color='red'>DELETE</Button>
