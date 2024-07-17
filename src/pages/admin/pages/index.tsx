@@ -15,7 +15,7 @@ const Admin = () => {
       <div className="flex justify-end mr-1">
         <Button mr={10} onClick={() => setOpenAddPost(true)}><FaPlusCircle className="mr-1" />Add Post</Button>
       </div>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap m-4">
         {data?.data ?
           data?.data.map((item: PostTypes) => (
             <Link to={`${item._id}`} key={item._id} className="m-4">
