@@ -3,8 +3,11 @@ import { CiSearch } from "react-icons/ci";
 import { FaMapLocationDot, FaTrainSubway } from "react-icons/fa6";
 import { FcAlarmClock } from "react-icons/fc";
 import map from './../../assets/images/map.png'
+import Train from "./components/train";
+import { useState } from "react";
 
 export const Home = () => {
+  const [trainOpen, setTrainOpen] = useState(false);
   return (
     <div className="flex bg-bg">
       <div className="flex flex-col items-center p-10 w-[50%] h-screen justify-center">
@@ -13,7 +16,7 @@ export const Home = () => {
           <Title order={3}>外国人専門のお部屋探しは</Title>
         </div>
         <div className="flex my-10">
-          <div className="rounded-full bg-gray-100 p-1 w-36 h-36 flex justify-center items-center cursor-pointer transition duration-300 hover:bg-gray-200">
+          <div onClick={() => setTrainOpen(true)} className="rounded-full bg-gray-100 p-1 w-36 h-36 flex justify-center items-center cursor-pointer transition duration-300 hover:bg-gray-200">
             <FaTrainSubway className="text-[50px] m-3" />
           </div>
           <div className="rounded-full bg-gray-100 p-1 w-36 h-36 flex justify-center items-center mx-5 cursor-pointer transition duration-300 hover:bg-gray-200">
@@ -42,6 +45,7 @@ export const Home = () => {
       <div className="w-[50%] flex justify-center items-center">
         <Image src={map} className="w-[50%] h-[50%] rounded-lg" />
       </div>
+      <Train open={trainOpen} setOpen={() => setTrainOpen(false)} />
     </div>
   )
 }

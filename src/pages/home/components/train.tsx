@@ -1,14 +1,45 @@
-import { Modal } from '@mantine/core'
+import { Button, CloseButton, Modal, Select } from '@mantine/core'
+import { useState } from 'react'
+import { useGetPosts } from '../api/get-posts.api'
+import { PostTypes } from '../types'
 
 interface Props {
-  open: boolean,
+  open: boolean
   setOpen: () => void
 }
 
 const Train = ({ open, setOpen }: Props) => {
-  return (
-    <Modal opened={open} onClose={setOpen}>
+  const [station, setStation] = useState<string | null>();
+  const [city, setCity] = useState<string | null>();
 
+  const { data } = useGetPosts({
+    station: station as string,
+    city: city as string
+  })
+
+  console.log(data?.data);
+
+  const removeDuplicates = (array: string[]) => {
+    return Array.from(new Set(array));
+  };
+
+  const stations = removeDuplicates(data?.data?.map((item: PostTypes) => item.station))
+
+  const citys = removeDuplicates(data?.data?.map((item: PostTypes) => item.city))
+
+  const searchFn = () => {
+
+  }
+  return (
+    <Modal opened={open} onClose={setOpen} withCloseButton={false} centered>
+      <div className='flex justify-end mb-1'>
+        <CloseButton onClick={setOpen} />
+      </div>
+      <Select label="町" placeholder='町入力してください' data={citys} onChange={(value) => setCity(value)} searchable />
+      <Select label="駅名" placeholder='駅名入力してください' data={stations} onChange={(value) => setStation(value)} searchable />
+      <div className='flex justify-end mt-3'>
+        <Button onClick={searchFn}>Search</Button>
+      </div>
     </Modal>
   )
 }
