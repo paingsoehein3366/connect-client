@@ -2,6 +2,7 @@ import { Button, CloseButton, Modal, Select } from '@mantine/core'
 import { useState } from 'react'
 import { useGetPosts } from '../api/get-posts.api'
 import { PostTypes } from '../types'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
   open: boolean
@@ -9,15 +10,11 @@ interface Props {
 }
 
 const Train = ({ open, setOpen }: Props) => {
+  const navigate = useNavigate();
   const [station, setStation] = useState<string | null>();
   const [city, setCity] = useState<string | null>();
 
-  const { data } = useGetPosts({
-    station: station as string,
-    city: city as string
-  })
-
-  console.log(data?.data);
+  const { data } = useGetPosts({})
 
   const removeDuplicates = (array: string[]) => {
     return Array.from(new Set(array));
@@ -28,7 +25,8 @@ const Train = ({ open, setOpen }: Props) => {
   const citys = removeDuplicates(data?.data?.map((item: PostTypes) => item.city))
 
   const searchFn = () => {
-
+    if (!city || !station) return
+    navigate(`${city}/${station}`)
   }
   return (
     <Modal opened={open} onClose={setOpen} withCloseButton={false} centered>
