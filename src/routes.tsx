@@ -4,6 +4,7 @@ import BaseLayout from "./pages/admin/components/BaseLayout";
 import { CardDetail } from "./pages/admin/components/card-detail";
 import { Home } from "./pages/home";
 import BaseLayoutHeader from "./components/layout/BaseLayout";
+import SearchRoom from "./pages/home/components/search-room";
 
 
 export const routes = createBrowserRouter([
@@ -20,7 +21,7 @@ export const routes = createBrowserRouter([
     element: <BaseLayoutHeader />,
     children: [
       { path: '/home', element: <Home /> },
-      { path: '/home/:city/:station', element: <Home /> },
+      { path: '/home/:city/:station', element: <SearchRoom /> },
     ]
   }
 ])

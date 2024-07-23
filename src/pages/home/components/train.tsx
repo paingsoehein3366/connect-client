@@ -27,13 +27,14 @@ const Train = ({ open, setOpen }: Props) => {
   const searchFn = () => {
     if (!city || !station) return
     navigate(`${city}/${station}`)
+    setOpen()
   }
   return (
     <Modal opened={open} onClose={setOpen} withCloseButton={false} centered>
       <div className='flex justify-end mb-1'>
         <CloseButton onClick={setOpen} />
       </div>
-      <Select label="町" placeholder='町入力してください' data={citys} onChange={(value) => setCity(value)} searchable />
+      <Select className="mb-4" label="町" placeholder='町入力してください' data={citys} onChange={(value) => setCity(value)} searchable />
       <Select label="駅名" placeholder='駅名入力してください' data={stations} onChange={(value) => setStation(value)} searchable />
       <div className='flex justify-end mt-3'>
         <Button onClick={searchFn}>Search</Button>
