@@ -26,7 +26,8 @@ const Train = ({ open, setOpen }: Props) => {
 
   const searchFn = () => {
     if (!city || !station) return
-    navigate(`${city}/${station}`)
+    const id = 1
+    navigate(`${id}`)
     setOpen()
   }
   return (

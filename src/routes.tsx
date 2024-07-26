@@ -21,7 +21,7 @@ export const routes = createBrowserRouter([
     element: <BaseLayoutHeader />,
     children: [
       { path: '/home', element: <Home /> },
-      { path: '/home/:city/:station', element: <SearchRoom /> },
+      { path: '/home/:id', element: <SearchRoom /> },
     ]
   }
 ])
